@@ -1,32 +1,32 @@
 module ToyRobot
   class Robot
     DIRECTION = ["NORTH", "EAST", "SOUTH", "WEST"]
-    attr_reader :east, :north, :direction
+    attr_reader :x, :y, :facing
 
-    def initialize(east = 0, north = 0, direction = "NORTH")
-      @east = east
-      @north = north
-      @direction = direction
+    def initialize(x = 0, y = 0, facing = "NORTH")
+      @x = x
+      @y = y
+      @facing = facing
     end
 
     def move_north
-      @north += 1
+      @y += 1
     end
     
     def move_east
-      @east += 1
+      @x += 1
     end
 
     def move_south
-      @north -= 1
+      @y -= 1
     end
 
     def move_west
-      @east -= 1
+      @x -= 1
     end
 
     def move
-      send("move_#{@direction.downcase}")
+      send("move_#{@facing.downcase}")
     end
 
     def turn_left
@@ -37,12 +37,18 @@ module ToyRobot
       turn(:right)
     end
 
+    def report
+      {
+
+      }
+    end
+
     private
 
     def turn(turn_direction)
-      index = DIRECTION.index(@direction)
+      index = DIRECTION.index(@facing)
       rotation = turn_direction == :right ? 1 : -1
-      @direction = DIRECTION.rotate(rotation)[index]
+      @facing = DIRECTION.rotate(rotation)[index]
     end
     
   end
