@@ -28,19 +28,19 @@ module ToyRobot
     end
 
     def move_north
-      @y += 1
+      @y < BOARD_SETUP[:y] ? @y += 1 : raise(ArgumentError, "Danger: Robot will fall off the table with move. Please reconsider.")
     end
     
     def move_east
-      @x += 1
+      @x < BOARD_SETUP[:x] ? @x += 1 : raise(ArgumentError, "Danger: Robot will fall off the table with move. Please reconsider.")
     end
 
     def move_south
-      @y -= 1
+      @y > 0 ? @y -= 1 : raise(ArgumentError, "Danger: Robot will fall off the table with move. Please reconsider.")
     end
 
     def move_west
-      @x -= 1
+      @x > 0 ? @x -= 1 : raise(ArgumentError, "Danger: Robot will fall off the table with move. Please reconsider.")
     end
 
     def move

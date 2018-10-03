@@ -1,13 +1,33 @@
 require "spec_helper"
 
 describe ToyRobot::Robot do
-  subject { ToyRobot::Robot.new(0) }
+  context "Testing robot initialization" do
+    it "should initialize robot based on specified parameters" do
+      robot = ToyRobot::Robot.new(2, 3, "SOUTH")
+      expect(robot.report).to eq({x: 2, y: 3, facing: "SOUTH"})
+    end
 
-  it "should raise argument error if not initialized with proper arguments" do
-    expect { ToyRobot::Robot.new(-1, 2, "BAD") }.to raise_error(ArgumentError)
+    it "should raise argument error if not initialized properly" do
+      expect { ToyRobot::Robot.new(-1, 2, "BAD") }.to raise_error(ArgumentError)
+    end
   end
 
-  context "Testing robot movement functionality at default position" do
+  context "Testing robot placement" do
+    subject { ToyRobot::Robot.new(0) }
+
+    it "should place robot based on specified parameters" do
+      subject.place(1, 1, "EAST")
+      expect(subject.report).to eq({x: 1, y: 1, facing: "EAST"})
+    end
+
+    it "should raise argument error if not place properly" do
+      expect { subject.place(-1, 2, "BAD") }.to raise_error(ArgumentError)
+    end
+  end
+  
+  context "Testing robot functionality at default position" do
+    subject { ToyRobot::Robot.new(0) }
+
     it "should move 2 spaces north" do
       2.times { subject.move_north }
       expect(subject.y).to eq(2)
@@ -18,23 +38,19 @@ describe ToyRobot::Robot do
       expect(subject.x).to eq(2)
     end
   
-    it "should move 2 spaces south" do
-      2.times { subject.move_south }
-      expect(subject.y).to eq(-2)
+    it "should raise error if asked to move south" do
+      expect { subject.move_south }.to raise_error(ArgumentError)
     end
   
-    it "should move 2 spaces west" do
-      2.times { subject.move_west }
-      expect(subject.x).to eq(-2)
+    it "should raise error if asked to move west" do
+      expect { subject.move_west }.to raise_error(ArgumentError)
     end
   
-    it "should move 4 spaces in its current direction" do
-      4.times { subject.move }
-      expect(subject.y).to eq(4)
+    it "should move 2 spaces in its current direction" do
+      2.times { subject.move }
+      expect(subject.y).to eq(2)
     end
-  end
 
-  context "Testing robot rotation functionality at default position" do
     it "should rotate to 90 degree when turning right" do
       subject.turn_right
       expect(subject.facing).to eq("EAST")
@@ -44,11 +60,10 @@ describe ToyRobot::Robot do
       subject.turn_left
       expect(subject.facing).to eq("WEST")
     end
-  end
 
-  context "Testing robot report functionality" do
     it "should report current x, y position and facing" do
       expect(subject.report).to eq({x: 0, y: 0, facing: "NORTH"})
     end
   end
+
 end
