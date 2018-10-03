@@ -13,7 +13,7 @@ describe ToyRobot::Robot do
   end
 
   context "Testing robot placement" do
-    subject { ToyRobot::Robot.new(0) }
+    subject { ToyRobot::Robot.new }
 
     it "should place robot based on specified parameters" do
       subject.place(1, 1, "EAST")
@@ -26,7 +26,7 @@ describe ToyRobot::Robot do
   end
   
   context "Testing robot functionality at default position" do
-    subject { ToyRobot::Robot.new(0) }
+    subject { ToyRobot::Robot.new }
 
     it "should move 2 spaces north" do
       2.times { subject.move_north }
@@ -66,4 +66,27 @@ describe ToyRobot::Robot do
     end
   end
 
+  context "Testing a series of actions with the robot" do
+    subject { ToyRobot::Robot.new }
+
+    it "should reach the destination of x: 0, y: 1, facing: NORTH" do
+      subject.place(0,0,"NORTH")
+      subject.move
+      expect(subject.report).to eq({x: 0, y: 1, facing: "NORTH"})
+    end
+
+    it "should reach the destination of x: 0, y: 0, facing: WEST" do
+      subject.place(0, 0, "NORTH")
+      subject.turn_left
+      expect(subject.report).to eq({x: 0, y: 0, facing: "WEST"})
+    end
+
+    it "should reach the destination of x: 3, y: 3, facing: NORTH" do
+      subject.place(1, 2, "EAST")
+      2.times { subject.move }
+      subject.turn_left
+      subject.move
+      expect(subject.report).to eq({x: 3, y: 3, facing: "NORTH"})
+    end
+  end
 end
