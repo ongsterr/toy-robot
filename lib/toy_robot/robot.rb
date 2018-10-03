@@ -1,12 +1,30 @@
 module ToyRobot
   class Robot
     DIRECTION = ["NORTH", "EAST", "SOUTH", "WEST"]
+    BOARD_SETUP = {
+      x: 4,
+      y: 4
+    }
     attr_reader :x, :y, :facing
 
     def initialize(x = 0, y = 0, facing = "NORTH")
-      @x = x
-      @y = y
-      @facing = facing
+      if validate_position(x, y, facing)
+        @x = x
+        @y = y
+        @facing = facing
+      else
+        raise ArgumentError, "Please ensure that x <= #{BOARD_SETUP[:x]}, y <= #{BOARD_SETUP[:y]} and facing is one of #{DIRECTION.join(" ")}"
+      end
+    end
+
+    def place(x, y, facing)
+      if validate_position(x, y, facing)
+        @x = x
+        @y = y
+        @facing = facing
+      else
+        raise ArgumentError, "Please ensure that x <= #{BOARD_SETUP[:x]}, y <= #{BOARD_SETUP[:y]} and facing is one of #{DIRECTION.join(" ")}"
+      end
     end
 
     def move_north
@@ -39,11 +57,17 @@ module ToyRobot
 
     def report
       {
-
+        x: @x,
+        y: @y,
+        facing: @facing
       }
     end
 
     private
+
+    def validate_position(x, y, facing)
+      (x >= 0 && x <= BOARD_SETUP[:x]) && (y >= 0 && y <= BOARD_SETUP[:y]) && (DIRECTION.include? facing)
+    end
 
     def turn(turn_direction)
       index = DIRECTION.index(@facing)

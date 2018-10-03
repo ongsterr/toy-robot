@@ -3,6 +3,10 @@ require "spec_helper"
 describe ToyRobot::Robot do
   subject { ToyRobot::Robot.new(0) }
 
+  it "should raise argument error if not initialized with proper arguments" do
+    expect { ToyRobot::Robot.new(-1, 2, "BAD") }.to raise_error(ArgumentError)
+  end
+
   context "Testing robot movement functionality at default position" do
     it "should move 2 spaces north" do
       2.times { subject.move_north }
@@ -39,6 +43,12 @@ describe ToyRobot::Robot do
     it "should rotate to -90 degree when turning left" do
       subject.turn_left
       expect(subject.facing).to eq("WEST")
+    end
+  end
+
+  context "Testing robot report functionality" do
+    it "should report current x, y position and facing" do
+      expect(subject.report).to eq({x: 0, y: 0, facing: "NORTH"})
     end
   end
 end
