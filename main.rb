@@ -1,5 +1,5 @@
 require_relative "./lib/app"
-require_relative "./lib/toy_robot/robot"
+require_relative "./lib/toy_robot"
 require "tty"
 
 # Specify some const

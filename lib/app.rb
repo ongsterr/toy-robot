@@ -1,5 +1,5 @@
 require "tty"
-require_relative "./toy_robot/robot"
+require_relative "./toy_robot"
 
 module App
   NUMBER_OF_COLUMN = ToyRobot::BOARD_SETUP[:x] + 1
