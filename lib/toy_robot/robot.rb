@@ -1,10 +1,11 @@
 module ToyRobot
+  DIRECTION = ["NORTH", "EAST", "SOUTH", "WEST"]
+  BOARD_SETUP = {
+    x: 4,
+    y: 4
+  }
+
   class Robot
-    DIRECTION = ["NORTH", "EAST", "SOUTH", "WEST"]
-    BOARD_SETUP = {
-      x: 4,
-      y: 4
-    }
     attr_reader :x, :y, :facing
 
     def initialize(x = 0, y = 0, facing = "NORTH")
