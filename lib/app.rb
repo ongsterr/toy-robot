@@ -44,7 +44,15 @@ module App
     end
 
     def main_selection
-      @prompt.select("What do you want to do with Mr Robot?", ["PLACE", "MOVE", "TURN LEFT", "TURN RIGHT", "REPORT", "EXIT"])
+      selection_array = [
+        { value: "PLACE", name: "Position Mr Robot" },
+        { value: "MOVE", name: "Move Mr Robot a step forward" },
+        { value: "TURN LEFT", name: "Turn Mr Robot left" },
+        { value: "TURN RIGHT", name: "Turn Mr Robot right" },
+        { value: "REPORT", name: "Report Mr Robot's position" },
+        { value: "EXIT", name: "Say Goodbye to Mr Robot" },
+      ]
+      @prompt.select("What do you want to do with Mr Robot?", selection_array)
     end
 
     def place_robot
